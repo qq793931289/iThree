@@ -1,0 +1,26 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "target": "es2017",
+        "jsx": "react",
+        "declaration": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "noUnusedParameters": true,
+        "noUnusedLocals": true,
+        "strict": true,
+        "noImplicitReturns": true,
+        "experimentalDecorators": true,
+        "strictPropertyInitialization": true,
+        "moduleResolution": "node",
+        "outDir": "./lib",
+        "sourceMap": false
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "include": [
+        "src/**/*"
+    ]
+}

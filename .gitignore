@@ -1,0 +1,10 @@
+/node_modules/
+/dist/
+*.log
+/.idea
+
+/src/project
+
+node_modules/
+
+package-lock.json
