@@ -4,7 +4,8 @@ import '../src/index';
 import './demo.scss';
 
 import { EventEmitter } from 'events';
-const img1 = require('./img/img1.png');
+// const img1 = require('./img/img1.png');
+import img1 from './img/img1.png';
 // const whiteicon = require('./img/white.png');
 import whiteicon from './img/white.png';
 // const blackicon = require('./img/black.png');
