@@ -12,12 +12,10 @@
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "noImplicitAny": true,
-    "target": "es5",
-    "module": "es6",
-    "declaration": true,
+    "target": "es6",
+    "declaration": false,
     "outDir": "./",
-    "sourceMap": true,
-    "downlevelIteration": true,
+    "sourceMap": false,
     "lib": [
       "dom",
       "es7"
