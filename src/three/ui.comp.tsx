@@ -11,8 +11,9 @@ export class ThreeContainer extends React.Component {
   // }
 
   public componentDidMount() {
-    const a = new ThreeRun();
-    console.log(a, 'ThreeRun');
+    const demo = new ThreeRun();
+    demo.componentDidMount()
+    // console.log(a, 'ThreeRun');
   }
 
   public render() {
