@@ -10,7 +10,7 @@ import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass
 // import { RoughnessMipmapper } from 'three/examples/jsm/utils/RoughnessMipmapper.js';
 // console.log(THREE);
 
-export class ThreeRun {
+export class Core {
 
   public container?: HTMLElement | null;
   public controls?: OrbitControls;
@@ -39,7 +39,7 @@ export class ThreeRun {
 
     this.init();
     this.renderCanvas();
-    this.onWindowResize();
+    // this.onWindowResize();
 
   }
 

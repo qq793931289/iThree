@@ -1,7 +1,7 @@
 
 
 import React from 'react';
-import { ThreeRun } from './init';
+import { Core } from './init';
 import { BaseContainer } from '../components/ui/base';
 
 export class ThreeContainer extends React.Component {
@@ -11,8 +11,8 @@ export class ThreeContainer extends React.Component {
   // }
 
   public componentDidMount() {
-    const a = new ThreeRun();
-    console.log(a, 'ThreeRun');
+    const a = new Core();
+    console.log(a, 'Core');
   }
 
   public render() {

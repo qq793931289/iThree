@@ -48,7 +48,7 @@ console.log();
     if (e.type === 'onreadystatechange' && document.readyState !== 'complete') {
       return;
     }
-    RenderDemo(components, navList, kitsList);
+    RenderDemo(components.slice(0, 1), navList.slice(0, 1), kitsList.slice(0, 1));
     ready = true;
   }
   if (document.addEventListener) {
