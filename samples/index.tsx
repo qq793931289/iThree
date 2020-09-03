@@ -21,6 +21,10 @@ export default function RenderDemo(list: JSX.Element[], navList: any[], kitsList
 
   render(
     <div key='demo' style={{ height: '100%' }}>
+
+      {list}
+
+
       {/* 头部图片  */}
       <div style={{
         width: '100%', height: '760px', backgroundColor: '#F8FAFF', backgroundImage: `url(${img1})`,
@@ -72,7 +76,7 @@ export default function RenderDemo(list: JSX.Element[], navList: any[], kitsList
 
       <div className='ui-title'> <span className='title-num'>02</span> <span className='title-text'>UI Elements</span> </div>
 
-      {list}
+      {/* {list} */}
     </div>,
     document.getElementById('demo-app')
     ,

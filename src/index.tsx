@@ -12,7 +12,7 @@ export class Main extends React.Component {
       <div>
         Main
       </div>
-    )
+    );
   }
 }
 
@@ -29,11 +29,11 @@ ReactDom.render(
   , document.getElementById('root'));
 
 
-document.oncontextmenu = function () { return false };
-document.onselectstart = function () { return false };
+document.oncontextmenu = function () { return false; };
+document.onselectstart = function () { return false; };
 
 const HelloWorld = () => {
-  console.log('Hello aicgz!')
-}
+  console.log('Hello aicgz!');
+};
 
 export { HelloWorld };
