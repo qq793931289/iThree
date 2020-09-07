@@ -1,1 +1,1 @@
-export declare class HelloWorld{};
+export * from './three/index';

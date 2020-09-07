@@ -29,7 +29,7 @@ export class ThreeRun {
 
     console.log('init ithree 1.0.3');
 
-    this.componentDidMount();
+    // this.componentDidMount();
   }
 
   public componentDidMount() {

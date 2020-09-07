@@ -122,7 +122,7 @@ export class DigitalEarth {
     this.scene.add(light2);
 
 
-    const box = new THREE.SphereBufferGeometry(4, 520, 200);
+    const box = new THREE.SphereBufferGeometry(4, 600, 240);
     // const material = new THREE.MeshNormalMaterial({
     //   // color: 0xFFFF00,
     //   wireframe: true,
@@ -132,6 +132,8 @@ export class DigitalEarth {
     const material = new THREE.PointsMaterial({
       color: 0x00FF00,
       size: 0.04,
+      transparent: true,
+      opacity: 0.06,
     });
 
     this.mesh = new THREE.Points(box, material);
