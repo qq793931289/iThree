@@ -16,6 +16,7 @@
     "pbuild": "webpack --mode=production --config webpack.config.js --progress --colors",
     "acopy": " npm run pbuild && xcopy .\\lib ..\\aicgz\\node_modules\\ithree\\lib /s /e /i /Y",
     "copy": " npm run pbuild && npm run acopy ",
+    "start": "npm run demo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

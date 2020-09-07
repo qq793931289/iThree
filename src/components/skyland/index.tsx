@@ -2,13 +2,13 @@
 // import * as Cesium from 'cesium';
 import * as React from 'react';
 import { BaseContainer } from '..';
-import { ThreeRun } from '../../demos/demo';
+import { Skyland } from '../../demos/skyland';
 
-export class DemoComponent extends React.Component {
+export class SkylandComponent extends React.Component {
   public _earth?: any;
 
   public componentDidMount() {
-    const a = new ThreeRun();
+    const a = new Skyland();
     console.log(a, 'ThreeRun');
   }
 

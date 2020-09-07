@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { DigitalEarthComponent } from '.';
+import { SkylandComponent } from '.';
 // import './style';
 
 function CesiumSample() {
   return (
-    <DigitalEarthComponent />
+    <SkylandComponent />
   );
 }
 
 export default {
-  order: 5,
+  order: 1,
   comp: CesiumSample,
 };

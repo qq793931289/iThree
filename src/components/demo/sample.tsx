@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { DemoContainer } from '.';
+import { DemoComponent } from '.';
 // import './style';
 
 function CesiumSample() {
   return (
-    <DemoContainer />
+    <DemoComponent />
   );
 }
 
