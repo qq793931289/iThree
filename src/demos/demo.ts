@@ -1,15 +1,5 @@
 import * as THREE from 'three';
-
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
-// import 'three/examples/jsm/controls/OrbitControls.js';
-// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-// import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-// import { RoughnessMipmapper } from 'three/examples/jsm/utils/RoughnessMipmapper.js';
-// console.log(THREE);
-
 export class ThreeRun {
 
   public container?: HTMLElement | null;
@@ -18,8 +8,6 @@ export class ThreeRun {
   public scene?: THREE.Scene;
   public renderer?: THREE.WebGLRenderer;
   public mesh?: THREE.Mesh;
-  public composer?: EffectComposer;
-  public afterimagePass?: AfterimagePass;
 
   // constructor(props) {
   //   super(props);
@@ -74,10 +62,8 @@ export class ThreeRun {
   }
 
   public renderCanvas = () => {
-
-    // this.renderer.render(this.scene, this.camera);
-    if (this.composer) {
-      this.composer.render();
+    if (this.renderer && this.scene && this.camera) {
+      this.renderer.render(this.scene, this.camera);
     }
   }
 
@@ -138,22 +124,8 @@ export class ThreeRun {
     this.controls.maxDistance = 10;
     this.controls.target.set(0, 0, - 0.2);
     this.controls.update();
-
     this.animate();
-
-    // postprocessing
-
-    this.composer = new EffectComposer(this.renderer);
-    this.composer.addPass(new RenderPass(this.scene, this.camera));
-
-    this.afterimagePass = new AfterimagePass();
-    this.composer.addPass(this.afterimagePass);
-
-    // this.afterimagePass.uniforms['damp'] = 0.99;
-    // this.afterimagePass.uniforms.damp = 0.999;
-
     window.addEventListener('resize', this.onWindowResize, false);
-
   }
 
 }

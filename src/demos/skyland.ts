@@ -1,15 +1,7 @@
 import * as THREE from 'three';
-
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { AfterimagePass } from 'three/examples/jsm/postprocessing/AfterimagePass.js';
-// import 'three/examples/jsm/controls/OrbitControls.js';
-// import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-// import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
-// import { RoughnessMipmapper } from 'three/examples/jsm/utils/RoughnessMipmapper.js';
-// console.log(THREE);
-
+import { Reflector } from 'three/examples/jsm/objects/Reflector.js';
+// import { Stats } from 'three/examples/jsm/libs/stats.module.js';
 export class Skyland {
 
   public container?: HTMLElement | null;
@@ -18,8 +10,6 @@ export class Skyland {
   public scene?: THREE.Scene;
   public renderer?: THREE.WebGLRenderer;
   public mesh?: THREE.Mesh;
-  public composer?: EffectComposer;
-  public afterimagePass?: AfterimagePass;
 
   // constructor(props) {
   //   super(props);
@@ -66,18 +56,11 @@ export class Skyland {
 
     this.renderCanvas();
 
-    this.mesh!
-      .rotateX(0.002 * Math.random() * 4)
-      .rotateY(0.002 * Math.random() * 4)
-      .rotateZ(-0.002 * Math.random() * 4);
-
   }
 
   public renderCanvas = () => {
-
-    // this.renderer.render(this.scene, this.camera);
-    if (this.composer) {
-      this.composer.render();
+    if (this.renderer && this.scene && this.camera) {
+      this.renderer.render(this.scene, this.camera);
     }
   }
 
@@ -101,16 +84,14 @@ export class Skyland {
     // this.camera = new THREE.OrthographicCamera(0.5 * frustumSize * aspect / - 2, 0.5 * frustumSize * aspect / 2, frustumSize / 2, frustumSize / - 2, 150, 1000);
 
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0xEEEEEE);
 
-    this.scene.add(new THREE.AmbientLight(0x444444));
+    this.scene.add(new THREE.AmbientLight(0xFFFFFF));
 
     const light1 = new THREE.DirectionalLight(0xFFFFFF, 0.5);
     light1.position.set(1, 1, 1);
     this.scene.add(light1);
 
-    const light2 = new THREE.DirectionalLight(0xFFFFFF, 1.5);
-    light2.position.set(0, - 1, 0);
-    this.scene.add(light2);
 
     const box = new THREE.SphereBufferGeometry(4, 4, 4, 1, 1, 1);
     const material = new THREE.MeshNormalMaterial({
@@ -121,6 +102,58 @@ export class Skyland {
     });
     this.mesh = new THREE.Mesh(box, material);
     this.scene.add(this.mesh);
+
+    // lights
+    const mainLight = new THREE.PointLight(0xCCCCCC, 1.5, 250);
+    mainLight.position.y = 60;
+    this.scene.add(mainLight);
+
+    const greenLight = new THREE.PointLight(0x00FF00, 0.25, 1000);
+    greenLight.position.set(550, 50, 0);
+    this.scene.add(greenLight);
+
+    const redLight = new THREE.PointLight(0xFF0000, 0.25, 1000);
+    redLight.position.set(- 550, 50, 0);
+    this.scene.add(redLight);
+
+    const blueLight = new THREE.PointLight(0x7F7FFF, 0.25, 1000);
+    blueLight.position.set(0, 50, 550);
+    this.scene.add(blueLight);
+
+    const grid = new THREE.GridHelper(100, 40, 0x000000, 0x000000);
+    grid.material.opacity = 0.1;
+    grid.material.depthWrite = false;
+    grid.material.transparent = true;
+    this.scene.add(grid);
+
+    // scene size
+    const WIDTH = window.innerWidth;
+    const HEIGHT = window.innerHeight;
+
+    const geometry1 = new THREE.CircleBufferGeometry(40, 64);
+    const groundMirror = new Reflector(geometry1, {
+      clipBias: 0.003,
+      textureWidth: WIDTH * window.devicePixelRatio,
+      textureHeight: HEIGHT * window.devicePixelRatio,
+      color: 0x777777 as any,
+      // recursion: 1,
+    });
+    groundMirror.position.y = 0.5;
+    groundMirror.rotateX(- Math.PI / 2);
+    this.scene.add(groundMirror);
+
+    const geometry = new THREE.PlaneBufferGeometry(100, 100);
+    const verticalMirror = new Reflector(geometry, {
+      clipBias: 0.003,
+      textureWidth: WIDTH * window.devicePixelRatio,
+      textureHeight: HEIGHT * window.devicePixelRatio,
+      color: 0x889999 as any,
+      // recursion: 1,
+    });
+    verticalMirror.position.y = 50;
+    verticalMirror.position.z = - 50;
+    this.scene.add(verticalMirror);
+
 
     this.renderer = new THREE.WebGLRenderer({ antialias: true });
     this.renderer.setPixelRatio(window.devicePixelRatio);
@@ -140,17 +173,6 @@ export class Skyland {
     this.controls.update();
 
     this.animate();
-
-    // postprocessing
-
-    this.composer = new EffectComposer(this.renderer);
-    this.composer.addPass(new RenderPass(this.scene, this.camera));
-
-    this.afterimagePass = new AfterimagePass();
-    this.composer.addPass(this.afterimagePass);
-
-    // this.afterimagePass.uniforms['damp'] = 0.99;
-    // this.afterimagePass.uniforms.damp = 0.999;
 
     window.addEventListener('resize', this.onWindowResize, false);
 
