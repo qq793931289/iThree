@@ -1,7 +1,17 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { Reflector } from 'three/examples/jsm/objects/Reflector.js';
-// import { Stats } from 'three/examples/jsm/libs/stats.module.js';
+import { Reflector, ReflectorOptions } from 'three/examples/jsm/objects/Reflector.js';
+import Stats from 'three/examples/jsm/libs/stats.module.js';
+// import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js';
+import * as dat from 'dat.gui';
+
+import negx from './maskonaive2/negx.jpg';
+import negy from './maskonaive2/negy.jpg';
+import negz from './maskonaive2/negz.jpg';
+import posx from './maskonaive2/posx.jpg';
+import posy from './maskonaive2/posy.jpg';
+import posz from './maskonaive2/posz.jpg';
+
 export class Skyland {
 
   public container?: HTMLElement | null;
@@ -10,6 +20,7 @@ export class Skyland {
   public scene?: THREE.Scene;
   public renderer?: THREE.WebGLRenderer;
   public mesh?: THREE.Mesh;
+  public stats?: Stats;
 
   // constructor(props) {
   //   super(props);
@@ -54,7 +65,9 @@ export class Skyland {
 
     window.requestAnimationFrame(this.animate);
 
+    this.stats!.begin();
     this.renderCanvas();
+    this.stats!.end();
 
   }
 
@@ -121,9 +134,9 @@ export class Skyland {
     this.scene.add(blueLight);
 
     const grid = new THREE.GridHelper(100, 40, 0x000000, 0x000000);
-    grid.material.opacity = 0.1;
-    grid.material.depthWrite = false;
-    grid.material.transparent = true;
+    (grid.material as THREE.Material).opacity = 0.1;
+    (grid.material as THREE.Material).depthWrite = false;
+    (grid.material as THREE.Material).transparent = true;
     this.scene.add(grid);
 
     // scene size
@@ -136,8 +149,8 @@ export class Skyland {
       textureWidth: WIDTH * window.devicePixelRatio,
       textureHeight: HEIGHT * window.devicePixelRatio,
       color: 0x777777 as any,
-      // recursion: 1,
-    });
+      recursion: 1,
+    } as ReflectorOptions);
     groundMirror.position.y = 0.5;
     groundMirror.rotateX(- Math.PI / 2);
     this.scene.add(groundMirror);
@@ -148,8 +161,8 @@ export class Skyland {
       textureWidth: WIDTH * window.devicePixelRatio,
       textureHeight: HEIGHT * window.devicePixelRatio,
       color: 0x889999 as any,
-      // recursion: 1,
-    });
+      recursion: 1,
+    } as ReflectorOptions);
     verticalMirror.position.y = 50;
     verticalMirror.position.z = - 50;
     this.scene.add(verticalMirror);
@@ -162,6 +175,42 @@ export class Skyland {
     this.renderer.toneMappingExposure = 1;
     this.renderer.outputEncoding = THREE.sRGBEncoding;
     this.container!.appendChild(this.renderer.domElement);
+
+
+    const pmremGenerator = new THREE.PMREMGenerator(this.renderer);
+    pmremGenerator.compileCubemapShader();
+
+    // const ldrUrls = ['px.png', 'nx.png', 'py.png', 'ny.png', 'pz.png', 'nz.png'];
+    // const ldrUrls = ['posx.jpg', 'negx.jpg', 'posy.jpg', 'negy.jpg', 'posz.jpg', 'negz.jpg'];
+    const ldrUrls = [posx, negx, posy, negy, posz, negz];
+    const ldrCubeMap = new THREE.CubeTextureLoader()
+      // .setPath('./textures/cube/pisa/')
+      // .setPath('./bridge2/')
+      .load(ldrUrls, function () {
+        ldrCubeMap.encoding = THREE.sRGBEncoding;
+        // ldrCubeRenderTarget = pmremGenerator.fromCubemap(ldrCubeMap);
+      });
+
+    this.scene.background = ldrCubeMap;
+
+    this.stats = Stats();
+    this.container!.appendChild(this.stats.dom);
+
+
+    // const gui = new GUI();
+    const gui = new dat.GUI();
+
+    const params = {
+      envMap: 'HDR',
+      roughness: 0,
+      metalness: 0,
+      exposure: 1,
+      debug: false,
+    };
+
+    gui.add(params, 'envMap', ['Generated', 'LDR', 'HDR', 'RGBM16']);
+    gui.add(params, 'roughness', 0, 1, 0.01);
+    gui.open();
 
     this.renderer.autoClearStencil = false;
 
@@ -177,5 +226,4 @@ export class Skyland {
     window.addEventListener('resize', this.onWindowResize, false);
 
   }
-
 }
