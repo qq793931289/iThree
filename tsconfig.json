@@ -15,7 +15,7 @@
     "target": "es5",
     "module": "es6",
     "declaration": true,
-    "outDir": "./",
+    "outDir": "./lib",
     "sourceMap": true,
     "downlevelIteration": true,
     "lib": [

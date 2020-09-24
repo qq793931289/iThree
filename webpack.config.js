@@ -23,8 +23,8 @@ module.exports = {
     filename: '[name].js',
     // filename: 'bundle.js',
     libraryTarget: 'umd',
-    library: 'icesium',
-    umdNamedDefine: true,
+    library: 'ithree',
+    umdNamedDefine: true, 
   },
   module: {
     rules: [{

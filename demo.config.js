@@ -22,48 +22,48 @@ module.exports = {
   },
   module: {
     rules: [{
-      test: /\.tsx?$/,
-      enforce: 'pre',
-      loader: 'tslint-loader',
-      options: {
-        emitErrors: true,
-        failOnHint: true,
-      }
-    },
-    {
-      test: /\.tsx?$/,
-      loader: 'ts-loader',
-      exclude: /node_modules/,
-      options: {
-        configFile: "demo.tsconfig.json"
-      }
-    },
-    {
-      test: /\.(scss|css)$/,
-      loader: 'style-loader!fast-css-loader!fast-sass-loader'
-    },
-    {
-      test: /\.(woff|woff2|ttf|eot|mp4)$/,
-      loader: 'file-loader?name=fonts/[name].[hash:8].[ext]'
-    },
-    {
-      test: /\.(png|jpg|jpeg|gif)$/,
-      loader: 'url-loader?limit=8192&name=images/[name].[hash:8].[ext]'
-    },
-    {
-      test: /\.svg$/,
-      include: [
-        path.resolve(__dirname, "src/")
-      ],
-      use: [{
-        loader: 'svg-sprite-loader',
+        test: /\.tsx?$/,
+        enforce: 'pre',
+        loader: 'tslint-loader',
         options: {
-          symbolId: '[name].[hash:4]',
-          extract: false,
-          spriteFilename: svgPath => `assets/sprite.[hash:8]${svgPath.substr(-4)}`
+          emitErrors: true,
+          failOnHint: true,
         }
-      }]
-    }
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          configFile: "demo.tsconfig.json"
+        }
+      },
+      {
+        test: /\.(scss|css)$/,
+        loader: 'style-loader!fast-css-loader!fast-sass-loader'
+      },
+      {
+        test: /\.(woff|woff2|ttf|eot|mp4)$/,
+        loader: 'file-loader?name=fonts/[name].[hash:8].[ext]'
+      },
+      {
+        test: /\.(png|jpg|jpeg|gif)$/,
+        loader: 'url-loader?limit=8192&name=images/[name].[hash:8].[ext]'
+      },
+      {
+        test: /\.svg$/,
+        include: [
+          path.resolve(__dirname, "src/")
+        ],
+        use: [{
+          loader: 'svg-sprite-loader',
+          options: {
+            symbolId: '[name].[hash:4]',
+            extract: false,
+            spriteFilename: svgPath => `assets/sprite.[hash:8]${svgPath.substr(-4)}`
+          }
+        }]
+      }
     ]
   },
   performance: {
@@ -81,5 +81,11 @@ module.exports = {
     //     toType: 'file',
     //   }
     // ]),
-  ]
+  ],
+  devServer: {
+    contentBase: "./",
+    historyApiFallback: true,
+    inline: true,
+    hot: true
+  }
 }

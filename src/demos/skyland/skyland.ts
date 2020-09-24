@@ -12,6 +12,8 @@ import posx from './maskonaive2/posx.jpg';
 import posy from './maskonaive2/posy.jpg';
 import posz from './maskonaive2/posz.jpg';
 
+// import path from './maskonaive2/';
+
 export class Skyland {
 
   public container?: HTMLElement | null;
@@ -75,6 +77,10 @@ export class Skyland {
     if (this.renderer && this.scene && this.camera) {
       this.renderer.render(this.scene, this.camera);
     }
+    this.mesh!
+      .rotateX(0.002 * Math.random() * 4)
+      .rotateY(0.002 * Math.random() * 4)
+      .rotateZ(-0.002 * Math.random() * 4);
   }
 
   public init() {
@@ -112,6 +118,7 @@ export class Skyland {
       wireframe: true,
       transparent: true,
       opacity: 0.6,
+      side: THREE.DoubleSide,
     });
     this.mesh = new THREE.Mesh(box, material);
     this.scene.add(this.mesh);
@@ -186,6 +193,7 @@ export class Skyland {
     const ldrCubeMap = new THREE.CubeTextureLoader()
       // .setPath('./textures/cube/pisa/')
       // .setPath('./bridge2/')
+      // .setPath(path)
       .load(ldrUrls, function () {
         ldrCubeMap.encoding = THREE.sRGBEncoding;
         // ldrCubeRenderTarget = pmremGenerator.fromCubemap(ldrCubeMap);
@@ -195,7 +203,6 @@ export class Skyland {
 
     this.stats = Stats();
     this.container!.appendChild(this.stats.dom);
-
 
     // const gui = new GUI();
     const gui = new dat.GUI();

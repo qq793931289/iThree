@@ -96,7 +96,7 @@ export class DigitalEarth {
     // this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
     // this.camera.position.set(- 1.8, 0.6, 2.7);
 
-    this.camera = new THREE.PerspectiveCamera(72, window.innerWidth / window.innerHeight, 1, 35000000000);
+    this.camera = new THREE.PerspectiveCamera(105, window.innerWidth / window.innerHeight, 1, 35000000000);
     this.camera.position.z = 100000000;
 
     this.camera.position.set(-500, 500, 10000000);
